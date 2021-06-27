@@ -9,12 +9,15 @@ const Home = () => {
         {title:'How to quit LoL', body: 'Lorem ipsum...', author: 'Freeman', id: 3}
     ]);
 
+    const handleDelete = (id) => {
+        setBlogs(blogs.filter(blog => blog.id!==id))
+    }
+
     return (
         <div className="home">
-            <BlogList blogs={blogs} title="All blogs" />
-            <BlogList blogs={blogs.filter(blog => blog.author!=='Zef')} title="Blogs not from Zef" />
+            <BlogList blogs={blogs} title="All blogs" handleDelete={handleDelete}/>
+            {/* <BlogList blogs={blogs.filter(blog => blog.author!=='Zef')} title="Blogs not from Zef" /> */}
         </div>
     )
 }
-
 export default Home;
