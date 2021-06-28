@@ -3,29 +3,27 @@ import BlogList from './BlogList';
 
 const Home = () => {
     //let name = 'Zef'
-    const [blogs, setBlogs] = useState([
-        {title:'FFXIV fashion blog', body: 'Lorem ipsum...', author: 'Zef', id: 1},
-        {title:'Best battle music', body: 'Lorem ipsum...', author: 'YtFinest', id: 2},
-        {title:'How to quit LoL', body: 'Lorem ipsum...', author: 'Freeman', id: 3}
-    ]);
-
-    const [name,setName] = useState('Zef');
-
-    const handleDelete = (id) => {
-        setBlogs(blogs.filter(blog => blog.id!==id))
-    }
+    const [blogs, setBlogs] = useState(null);
+    const [isPending,setIsPending] = useState(true);
 
     useEffect(()=>{
-        console.log('use effect ran')
-        console.log(blogs);
-        console.log(name);
-    },[name])
+        setTimeout(() => {
+            fetch('http://localhost:8000/blogs')
+            .then(res => {
+                return res.json()
+            })
+            .then((data => {
+                console.log(data)
+                setBlogs(data);
+                setIsPending(false);
+            }))
+        },1000);
+    },[])
 
     return (
         <div className="home">
-            <BlogList blogs={blogs} title="All blogs" handleDelete={handleDelete}/>
-            <button onClick={() => setName('Tsumirez')}>changeName</button>
-            <p>{name}</p>
+            {isPending && <div>Loading...</div>}
+            {blogs && <BlogList blogs={blogs} title="All blogs" />}
             {/* <BlogList blogs={blogs.filter(blog => blog.author!=='Zef')} title="Blogs not from Zef" /> */}
         </div>
     )
