@@ -5,10 +5,15 @@ const Create = () => {
     const [body, setBody] = useState('')
     const [author, setAuthor] = useState('Zef')
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const blog = {title, body, author};
+    }
   return (
     <div className="create">
       <h2>Add a new Blog</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
+          
         <label>Blog title:</label>
         <input type="text" required value={title} 
          onChange={(e)=> {
@@ -16,7 +21,7 @@ const Create = () => {
          }}/>
 
         <label>Blog body:</label>
-        <textarea required onChange={
+        <textarea required value={body} onChange={
             (e) => setBody(e.target.value)
         }></textarea>
         
@@ -26,7 +31,6 @@ const Create = () => {
           <option value="Tsumirez">Tsumirez</option>
         </select>
         <button>Add Blog</button>
-        <p>{title}, {body}, {author}</p>
       </form>
     </div>
   );
